@@ -7,8 +7,6 @@ import Notification from './components/Notification'
 
 import phonebookService from './services/phonebook'
 
-import axios from 'axios'
-
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
@@ -106,6 +104,15 @@ const App = () => {
 
     }).catch(error => {
       console.log('Error: ', error)
+      
+      if (error.hasOwnProperty('response') && 
+          error.response.hasOwnProperty('data') && 
+          error.response.data.hasOwnProperty('error') ) {
+
+        updateErrorMsg(`${error.response.data.error}`)
+        return
+
+      }
 
       updateErrorMsg(`${error.message}`)
     })
