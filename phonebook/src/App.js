@@ -62,6 +62,16 @@ const App = () => {
       }).catch(error => {
        
         console.log('Error: ', error)
+
+      if (error.hasOwnProperty('response') && 
+          error.response.hasOwnProperty('data') && 
+          error.response.data.hasOwnProperty('error') ) {
+
+          updateErrorMsg(`${error.response.data.error}`)
+          return
+
+      }
+        
         updateErrorMsg(`Information of ${person.name} has already been removed from server`)
       })  
       
